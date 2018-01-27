@@ -3,7 +3,7 @@ package org.wontology.gleneivey.starshipbot.app
 import react.setState
 import kotlin.browser.document
 
-fun initializeThreeAndCanvasIntoState(): AppState {
+fun initializeRenderingIntoState(): StarshipState {
     val scene = Three.Scene()
 
     val ambientLight = Three.AmbientLight(0x555555)
@@ -19,6 +19,7 @@ fun initializeThreeAndCanvasIntoState(): AppState {
             0.1,
             10000.0
     )
+    camera.zoom = 10
 
     val renderer = Three.WebGLRenderer(RendererSettings().apply {
         alpha = true
@@ -37,9 +38,21 @@ fun initializeThreeAndCanvasIntoState(): AppState {
 
     document.body!!.appendChild(renderer.domElement)
 
-    return AppState(
+    return StarshipState(
         scene = scene,
         material = material,
-        camera = camera
+        camera = camera,
+        rho = 0.0,
+        rotationX = -0.3,
+        rotationY = +0.3,
+        rotationZ = +0.0,
+        positionZ = 0.0
     )
+}
+
+fun advanceState(state: StarshipState): StarshipState {
+    return state.apply {
+        rotationY = state.rotationY + 0.002
+        rotationZ = state.rotationZ + 0.002
+    }
 }

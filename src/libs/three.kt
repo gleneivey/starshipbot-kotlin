@@ -23,11 +23,15 @@ external class Three {
             aspectRatio: Double,
             frustumNearPlaneDistance: Double,
             frustumFarPlaneDistance: Double
-    ) {}
+    ) {
+        fun updateProjectionMatrix()
+        var zoom: Int
+    }
 
     class WebGLRenderer(settings: RendererSettings) {
         fun setSize(width: Int, height: Int)
         fun setClearColor(color: Int, alpha: Double)
+        fun render(scene: Three.Scene, camera: PerspectiveCamera)
         var domElement: Node
     }
 
@@ -36,6 +40,9 @@ external class Three {
     }
 
     class MeshPhongMaterial(settings: MaterialSettings) {}
+
+    class CylinderGeometry(radiusTop: Double, radiusBottom: Double,
+                           height: Double, radialSegments: Int)
 
     companion object {
         var DoubleSide: Sides
