@@ -26,8 +26,8 @@ external class Three {
     open class Camera {
         fun updateProjectionMatrix()
         var zoom: Int
-        var position: CameraCoordinates
-        var rotation: CameraCoordinates
+        var position: Coordinates
+        var rotation: Coordinates
     }
 
     class PerspectiveCamera(
@@ -57,7 +57,9 @@ external class Three {
     class CylinderGeometry(radiusTop: Double, radiusBottom: Double,
                            height: Double, radialSegments: Int) : Geometry
 
-    class Mesh(geometry: Geometry, material: Material)
+    class Mesh(geometry: Geometry, material: Material) {
+        var rotation: Coordinates
+    }
 
     companion object {
         var DoubleSide: Sides
@@ -68,7 +70,7 @@ external class LightPosition {
     fun set(x: Int, y: Int, z: Int)
 }
 
-external class CameraCoordinates {
+external class Coordinates {
     var x: Double
     var y: Double
     var z: Double

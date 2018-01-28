@@ -8,7 +8,7 @@ class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProp
         val populatedState = initializeGraphicsAndState()
         setState(populatedState, {})
 
-        setDesign(populatedState.scene, populatedState.material)
+        setDesign(props.design!!, populatedState.scene, populatedState.material)
 
         window.setInterval({
             setState(advanceState(state), {})
@@ -30,9 +30,7 @@ class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProp
     }
 
 
-    class StarshipProps : RProps {
-        var count: Int? = null
-    }
+    class StarshipProps(var design: DesignTree?) : RProps
 
     class StarshipState(
             var renderer: Three.Renderer,
@@ -48,6 +46,6 @@ class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProp
     ) : RState
 }
 
-fun RBuilder.starship(count: Int = 0) = child(Starship::class) {
-    attrs.count = count
+fun RBuilder.starship(design: DesignTree) = child(Starship::class) {
+    attrs.design = design
 }

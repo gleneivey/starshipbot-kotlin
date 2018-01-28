@@ -55,10 +55,22 @@ fun initializeGraphicsAndState(): Starship.StarshipState {
     )
 }
 
-fun setDesign(scene: Three.Scene, material: Three.Material) {
-    val geometry = Three.CylinderGeometry(20.0, 20.0, 90.0, 100)
-    val shape = Three.Mesh(geometry, material)
-    scene.add(shape)
+fun setDesign(design: DesignTree, scene: Three.Scene, material: Three.Material) {
+    setDesignRecursively(design, scene, material)
+}
+
+fun setDesignRecursively(design: DesignTree,
+                         scene: Three.Scene, material: Three.Material) {
+    when (design) {
+        is DesignLeaf -> {
+            setAPrimitive(design, scene, material)
+        }
+        is DesignNode -> {
+            design.children.forEach { child ->
+                setDesignRecursively(child, scene, material)
+            }
+        }
+    }
 }
 
 fun advanceState(state: Starship.StarshipState): Starship.StarshipState {
