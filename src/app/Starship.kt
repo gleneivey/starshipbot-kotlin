@@ -5,7 +5,7 @@ import react.dom.*
 
 class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProps, Starship.StarshipState>(props) {
     override fun componentDidMount() {
-        val populatedState = initializeGraphicsAndState()
+        val populatedState = initializeGraphicsAndState(props.surfaceColor!!)
         setState(populatedState, {})
 
         setDesign(props.design!!, populatedState.scene, populatedState.material)
@@ -30,7 +30,10 @@ class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProp
     }
 
 
-    class StarshipProps(var design: DesignTree?) : RProps
+    class StarshipProps(
+            var surfaceColor: SurfaceColor?,
+            var design: DesignTree?
+    ) : RProps
 
     class StarshipState(
             var renderer: Three.Renderer,
@@ -46,6 +49,8 @@ class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProp
     ) : RState
 }
 
-fun RBuilder.starship(design: DesignTree) = child(Starship::class) {
-    attrs.design = design
-}
+fun RBuilder.starship(surfaceColor: SurfaceColor, design: DesignTree) =
+        child(Starship::class) {
+            attrs.surfaceColor = surfaceColor
+            attrs.design = design
+        }

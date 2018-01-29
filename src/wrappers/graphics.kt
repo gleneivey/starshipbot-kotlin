@@ -5,10 +5,10 @@ import kotlin.browser.document
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun initializeGraphicsAndState(): Starship.StarshipState {
+fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipState {
     val scene = Three.Scene()
 
-    val ambientLight = Three.AmbientLight(0x555555)
+    val ambientLight = Three.AmbientLight(0xaaaaaa)
     scene.add(ambientLight)
 
     val light = Three.SpotLight(0xffffff)
@@ -30,7 +30,7 @@ fun initializeGraphicsAndState(): Starship.StarshipState {
     renderer.setClearColor(0xffffff, 0.0)
 
     val materialColor = Three.Color()
-    materialColor.setRGB(0.57, 0.578, 0.492)
+    materialColor.setRGB(surfaceColor.r, surfaceColor.g, surfaceColor.b)
     val material = Three.MeshPhongMaterial(materialSettings().apply {
         color = materialColor
         specular = 0x0
@@ -40,7 +40,7 @@ fun initializeGraphicsAndState(): Starship.StarshipState {
 
     document.body!!.appendChild(renderer.domElement)
 
-    val scale = 100.0
+    val scale = 200.0
     val rho = camera.zoom * scale
     return Starship.StarshipState(
             renderer = renderer,
@@ -75,8 +75,8 @@ fun setDesignRecursively(design: DesignTree,
 
 fun advanceState(state: Starship.StarshipState): Starship.StarshipState {
     return state.apply {
-        rotationY = state.rotationY + 0.002
-        rotationZ = state.rotationZ + 0.002
+        rotationY = state.rotationY + 0.0034
+        rotationZ = state.rotationZ + 0.0035
     }
 }
 

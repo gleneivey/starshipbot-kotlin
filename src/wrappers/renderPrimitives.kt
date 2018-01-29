@@ -14,5 +14,8 @@ fun setAPrimitive(leaf: DesignLeaf, scene: Three.Scene, material: Three.Material
             throw IllegalArgumentException("Don't know what kind of primitive this is")
     }
 
+    shape.position.x = leaf.offsetX
+    shape.position.y = leaf.offsetY
+    shape.position.z = leaf.offsetZ
     scene.add(shape)
 }

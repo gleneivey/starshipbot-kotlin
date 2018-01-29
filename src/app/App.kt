@@ -5,7 +5,8 @@ import react.*
 class App : RComponent<RProps, RState>() {
     override fun RBuilder.render() {
         val design = generateAShipDesign(100.0)
-        starship(design)
+        val surfaceColor = aRandomSurfaceColor()
+        starship(surfaceColor, design)
     }
 }
 

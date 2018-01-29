@@ -58,6 +58,7 @@ external class Three {
                            height: Double, radialSegments: Int) : Geometry
 
     class Mesh(geometry: Geometry, material: Material) {
+        var position: Coordinates
         var rotation: Coordinates
     }
 
