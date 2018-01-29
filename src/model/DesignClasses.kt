@@ -4,9 +4,9 @@ open class DesignTree {
     var offsetX = 0.0
     var offsetY = 0.0
     var offsetZ = 0.0
-    var alignmentX = 0.0
-    var alignmentY = 0.0
-    var alignmentZ = 0.0
+    var rotationX = 0.0
+    var rotationY = 0.0
+    var rotationZ = 0.0
     var extentX = 0.0
     var extentY = 0.0
     var extentZ = 0.0
@@ -20,9 +20,9 @@ open class DesignTree {
         offsetX = source.offsetX
         offsetY = source.offsetY
         offsetZ = source.offsetZ
-        alignmentX = source.alignmentX
-        alignmentY = source.alignmentY
-        alignmentZ = source.alignmentZ
+        rotationX = source.rotationX
+        rotationY = source.rotationY
+        rotationZ = source.rotationZ
     }
 }
 
@@ -44,6 +44,20 @@ class Cylinder(val radius: Double, val length: Double) : DesignLeaf() {
 
     override fun duplicate(): DesignTree {
         val dupe = Cylinder(radius, length)
+        dupe.cloneOffsetAndAlignment(this)
+        return dupe
+    }
+}
+
+class Disk(val radius: Double, val thick: Double) : DesignLeaf() {
+    init {
+        extentX = radius
+        extentY = radius
+        extentZ = thick
+    }
+
+    override fun duplicate(): DesignTree {
+        val dupe = Disk(radius, thick)
         dupe.cloneOffsetAndAlignment(this)
         return dupe
     }
