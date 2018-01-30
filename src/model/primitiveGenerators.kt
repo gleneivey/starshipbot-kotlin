@@ -42,6 +42,7 @@ fun aBoundedDisk(
 
 fun aBoundedCylinder(
         maxComponentExtent: Double,
+        maxRadius: Double?,
         minLengthFraction: Double,
         minRadiusLengthRatio: Double?,
         maxRadiusLengthRatio: Double?
@@ -52,16 +53,20 @@ fun aBoundedCylinder(
 
     var radius = 0.0
     if (minRadiusLengthRatio != null && maxRadiusLengthRatio != null) {
-        val ratio = randomInRange(minRadiusLengthRatio, maxRadiusLengthRatio)
-        radius = ratio * length
+        do {
+            val ratio = randomInRange(minRadiusLengthRatio, maxRadiusLengthRatio)
+            radius = ratio * length
+        } while (maxRadius != null && radius > maxRadius)
     } else if (minRadiusLengthRatio != null) {
         do {
             radius = maxComponentExtent * random()
-        } while (radius/length < minRadiusLengthRatio)
+        } while (radius/length < minRadiusLengthRatio ||
+                (maxRadius != null && radius > maxRadius))
     } else if (maxRadiusLengthRatio != null) {
         do {
             radius = maxComponentExtent * random()
-        } while (radius/length > maxRadiusLengthRatio)
+        } while (radius/length > maxRadiusLengthRatio ||
+                (maxRadius != null && radius > maxRadius))
     }
 
     return Cylinder(radius, length)

@@ -39,9 +39,15 @@ fun aDesignWithSeveralSubdesigns(
 
 data class MinMaxValues(val min: Double, val max: Double)
 fun minAndMaxOverlappingX(that: DesignTree, other: DesignTree): MinMaxValues {
+    val thatFront = that.offsetX + (that.extentX/2)
+    val thatRear = that.offsetX - (that.extentX/2)
+    val otherFront = other.offsetX + (other.extentX/2)
+    val otherRear = other.offsetX - (other.extentX/2)
+//println("$thatFront to $thatRear (2nd);  $otherFront to $otherRear (nacelle)")
+
     return MinMaxValues(
-            min(that.offsetX + (that.extentX/2), other.offsetX + (other.extentX/2)),
-            max(that.offsetX - (that.extentX/2), other.offsetX - (other.extentX/2))
+            max(thatRear, otherRear),
+            min(thatFront, otherFront)
     )
 }
 

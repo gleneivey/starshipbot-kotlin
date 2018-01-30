@@ -22,5 +22,9 @@ fun setAPrimitive(leaf: DesignLeaf, scene: Three.Scene, material: Three.Material
     shape.position.x = leaf.offsetX
     shape.position.y = leaf.offsetY
     shape.position.z = leaf.offsetZ
+    shape.rotation.x += leaf.rotationX
+    shape.rotation.y += leaf.rotationY
+    shape.rotation.z += leaf.rotationZ
+
     scene.add(shape)
 }
