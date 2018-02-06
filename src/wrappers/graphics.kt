@@ -5,6 +5,20 @@ import kotlin.browser.document
 import kotlin.math.cos
 import kotlin.math.sin
 
+fun initializeAnimationState(surfaceColor: SurfaceColor): Starship.StarshipState {
+
+}
+
+fun initializeRendering() {
+
+    return Starship.StarshipState(
+            renderer = renderer,
+            scene = scene,
+            material = material,
+            camera = camera
+    )
+}
+
 fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipState {
     val scene = Three.Scene()
 
@@ -46,12 +60,7 @@ fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipSta
             renderer = renderer,
             scene = scene,
             material = material,
-            camera = camera,
-            rho = rho,
-            rotationX = -0.3,
-            rotationY = +0.3,
-            rotationZ = +0.0,
-            positionZ = rho
+            camera = camera
     )
 }
 
@@ -80,7 +89,7 @@ fun advanceState(state: Starship.StarshipState): Starship.StarshipState {
     }
 }
 
-fun renderDesign(state: Starship.StarshipState) {
+fun renderDesign(props: Renderer.RendererProps, state: Renderer.RendererState) {
     // animation rotates camera; update rotation, then update position so
     //   it always points back to the origin
     val camera = state.camera
