@@ -6,18 +6,18 @@ import react.dom.*
 class Starship(props: Starship.StarshipProps) : RComponent<Starship.StarshipProps, Starship.StarshipState>(props) {
     override fun componentDidMount() {
 println("Starship.componentDidMount")
-        window.setInterval({
-            setState(advanceState(state))
-        }, 1000/60)
+        val populatedState = initializeRendering(props.surfaceColor!!)
+        setState(populatedState, {})
+
+        setDesign(props.design!!, populatedState.scene, populatedState.material)
+
+//        window.setInterval({
+//            setState(advanceState(state))
+//        }, 1000/60)
     }
 
     override fun RBuilder.render() {
 println("Starship.render")
-
-        val populatedState = initializeAnimationState(props.surfaceColor!!)
-        setState(populatedState, {})
-
-        setDesign(props.design!!, populatedState.scene, populatedState.material)
 
 
         p("App-credits") {
@@ -29,7 +29,7 @@ println("Starship.render")
             a("https://github.com/gleneivey/starshipbot-kotlin") {
                 +"github.com/gleneivey/starshipbot-kotlin"
             }
-            renderer(surfaceColor, design)
+//            renderer(surfaceColor, design)
         }
     }
 

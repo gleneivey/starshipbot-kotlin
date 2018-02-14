@@ -5,21 +5,7 @@ import kotlin.browser.document
 import kotlin.math.cos
 import kotlin.math.sin
 
-fun initializeAnimationState(surfaceColor: SurfaceColor): Starship.StarshipState {
-
-}
-
-fun initializeRendering() {
-
-    return Starship.StarshipState(
-            renderer = renderer,
-            scene = scene,
-            material = material,
-            camera = camera
-    )
-}
-
-fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipState {
+fun initializeRendering(surfaceColor: SurfaceColor): Starship.StarshipState {
     val scene = Three.Scene()
 
     val ambientLight = Three.AmbientLight(0xaaaaaa)
@@ -52,10 +38,6 @@ fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipSta
         side = Three.DoubleSide
     })
 
-    document.body!!.appendChild(renderer.domElement)
-
-    val scale = 200.0
-    val rho = camera.zoom * scale
     return Starship.StarshipState(
             renderer = renderer,
             scene = scene,
@@ -63,6 +45,23 @@ fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipSta
             camera = camera
     )
 }
+
+fun mountCanvas(renderer: Three.WebGLRenderer) {
+    document.body!!.appendChild(renderer.domElement)
+}
+
+//fun initializeGraphicsAndState(surfaceColor: SurfaceColor): Starship.StarshipState {
+//
+//
+//    val scale = 200.0
+//    val rho = camera.zoom * scale
+//    return Starship.StarshipState(
+//            renderer = renderer,
+//            scene = scene,
+//            material = material,
+//            camera = camera
+//    )
+//}
 
 fun setDesign(design: DesignTree, scene: Three.Scene, material: Three.Material) {
     setDesignRecursively(design, scene, material)
@@ -82,7 +81,7 @@ fun setDesignRecursively(design: DesignTree,
     }
 }
 
-fun advanceState(state: Starship.StarshipState): Starship.StarshipState {
+fun advanceState(state: Renderer.RendererState): Renderer.RendererState {
     return state.apply {
         rotationY = state.rotationY + 0.0034
         rotationZ = state.rotationZ + 0.0035
@@ -92,7 +91,7 @@ fun advanceState(state: Starship.StarshipState): Starship.StarshipState {
 fun renderDesign(props: Renderer.RendererProps, state: Renderer.RendererState) {
     // animation rotates camera; update rotation, then update position so
     //   it always points back to the origin
-    val camera = state.camera
+    val camera = props.camera
     camera.rotation.x = state.rotationX
     camera.rotation.y = state.rotationY
     camera.rotation.z = state.rotationZ
@@ -104,5 +103,5 @@ fun renderDesign(props: Renderer.RendererProps, state: Renderer.RendererState) {
             state.rho * cos(-state.rotationX) * cos(state.rotationY)
 
     camera.updateProjectionMatrix()
-    state.renderer.render(state.scene, camera)
+    props.renderer.render(props.scene, camera)
 }
